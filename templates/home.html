@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDo App</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark">&check;</div>
+        <div>
+          <p class="eyebrow">Lightweight task board</p>
+          <h1>My To-Do Desk</h1>
+          <p class="subhead">Plan, focus, and celebrate small wins.</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="date-chip">Today <span id="today-date">{% now "j F Y" %}</span></div>
+        <div class="stats">
+          <div class="stat-card">
+            <p class="label">Open</p>
+            <p id="open-count" class="value">0</p>
+          </div>
+          <div class="stat-card">
+            <p class="label">Done</p>
+            <p id="done-count" class="value">0</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- Left: My Day -->
+      <section class="column">
+        <div class="column-header">
+          <div>
+            <p class="eyebrow">Focus zone</p>
+            <h2>My Day</h2>
+          </div>
+          <span class="pill accent">Add tasks below</span>
+        </div>
+
+        <div id="tasks-list" class="card-list"></div>
+
+        <!-- New Task Input -->
+        <div class="new-task-wrapper">
+          <div class="field">
+            <label for="new-task-input">Add a quick task</label>
+            <input
+              type="text"
+              id="new-task-input"
+              class="new-task-input"
+              placeholder="Type a task and press Enter"
+            />
+          </div>
+          <button id="add-task-btn" class="btn btn-primary">
+            <span class="icon">+</span>
+            Add
+          </button>
+        </div>
+      </section>
+
+      <!-- Right: Completed Tasks -->
+      <section class="column">
+        <div class="column-header">
+          <div>
+            <p class="eyebrow">Wins</p>
+            <h2>Completed</h2>
+          </div>
+          <span class="pill success">Great job</span>
+        </div>
+
+        <div id="completed-list" class="card-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Edit modal -->
+  <div id="edit-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Edit task</h3>
+        <button id="edit-close" class="icon-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <label class="modal-label" for="edit-text">Task text</label>
+      <textarea id="edit-text" class="modal-input" rows="3"></textarea>
+      <div class="modal-actions">
+        <button id="edit-cancel" class="btn btn-outline">Cancel</button>
+        <button id="edit-save" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
