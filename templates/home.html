@@ -45,24 +45,49 @@
           <span class="pill accent">Add tasks below</span>
         </div>
 
-        <div id="tasks-list" class="card-list"></div>
+        <div id="tasks-list" class="card-list">
+          {% if tasks %}
+            {% for task in tasks %}
+              <div class="task-card" data-id="{{ task.id }}">
+                <div class="task-text">{{ task.task }}</div>
+                <div class="btn-group">
+                  <button class="btn btn-success" data-action="done">
+                    <span class="icon">&#10003;</span>Mark as done
+                  </button>
+                  <button class="btn btn-danger" data-action="delete">
+                    <span class="icon">&times;</span>
+                  </button>
+                  <button class="btn btn-outline" data-action="edit">
+                    <span class="icon">&#9998;</span>Edit
+                  </button>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="list-empty">No tasks yet. Add your first one below.</p>
+          {% endif %}
+        </div>
 
         <!-- New Task Input -->
-        <div class="new-task-wrapper">
+        <form class="new-task-wrapper" id="new-task-form" action="{% url 'addTask' %}" method="POST">
+          {% csrf_token %}
           <div class="field">
             <label for="new-task-input">Add a quick task</label>
             <input
               type="text"
               id="new-task-input"
+              name="task"
               class="new-task-input"
               placeholder="Type a task and press Enter"
+              autocomplete="off"
+              required
             />
           </div>
-          <button id="add-task-btn" class="btn btn-primary">
+          <button id="add-task-btn" class="btn btn-primary" type="submit">
             <span class="icon">+</span>
             Add
           </button>
-        </div>
+        </form>
       </section>
 
       <!-- Right: Completed Tasks -->
@@ -75,7 +100,20 @@
           <span class="pill success">Great job</span>
         </div>
 
-        <div id="completed-list" class="card-list"></div>
+        <div id="completed-list" class="card-list">
+          
+            {% for task in tasks %}
+              <div class="task-card completed" data-id="{{ task.id }}">
+                <div class="task-text">{{ task.task }}</div>
+                <div class="btn-group">
+                  <button class="btn btn-danger" data-action="delete">
+                    <span class="icon">&times;</span>
+                  </button>
+                </div>
+              </div>
+            {% endfor %}
+          
+        </div>
       </section>
     </main>
   </div>
@@ -96,6 +134,6 @@
     </div>
   </div>
 
-  <script src="{% static 'js/script.js' %}"></script>
+ <!-- <script src="{% static 'js/script.js' %}"></script> -->
 </body>
 </html>

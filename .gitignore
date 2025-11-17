@@ -1,0 +1,33 @@
+﻿# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Django stuff
+*.log
+*.pot
+*.py,cover
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Migrations (optional; keep if you commit schema)
+**/migrations/**/__pycache__/
+**/migrations/*.py[cod]
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+ehthumbs.db
+Thumbs.db
+.DS_Store
