@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Task</title>
+  <style>
+    /* Page shell */
+    :root {
+      --bg: #0f172a;
+      --card: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.14);
+      --text: #e2e8f0;
+      --muted: #cbd5e1;
+      --primary: #2563eb;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(120% 120% at 10% 20%, rgba(124, 58, 237, 0.18), transparent 40%),
+        radial-gradient(100% 120% at 80% 0%, rgba(37, 99, 235, 0.24), transparent 38%),
+        linear-gradient(140deg, #0b1224, #0f172a 45%, #0a1226);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      padding: 16px;
+    }
+    /* Modal wrapper (always visible on this page) */
+    .modal-backdrop {
+      width: min(560px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      padding: 18px;
+    }
+    .modal {
+      width: 100%;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    h3 {
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+    .modal-header button {
+      display: none;
+    }
+    .modal-label {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .modal-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font-size: 1rem;
+      resize: vertical;
+      min-height: 110px;
+      outline: none;
+    }
+    .modal-input:focus {
+      border-color: rgba(37, 99, 235, 0.7);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+    .modal-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 600;
+      color: #f8fafc;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.08);
+      transition: transform 0.08s ease, box-shadow 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
+    .btn-primary {
+      background: linear-gradient(140deg, #2563eb, #1d4ed8);
+      border-color: rgba(37, 99, 235, 0.7);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div id="edit-modal" class="modal-backdrop">
+    <div class="modal">
+      <form id="edit-form" method="POST" action="{% url 'edit_task' task.pk %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h3>Edit task</h3>
+        </div>
+        <label class="modal-label" for="edit-text">Task text</label>
+        <textarea id="edit-text" name="task_update" class="modal-input" rows="3" required>{{ task.task }}</textarea>
+        <div class="modal-actions">
+          <a href="{% url 'home' %}"><button id="edit-cancel" type="button" class="btn btn-outline">Cancel</button></a>
+          <button id="edit-save" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

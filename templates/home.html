@@ -49,17 +49,17 @@
           {% if tasks %}
             {% for task in tasks %}
               <div class="task-card" data-id="{{ task.id }}">
-                <div class="task-text">{{ task.task }}</div>
+                <div class="task-text">ID {{ task.pk }} - {{ task.task }}</div>
                 <div class="btn-group">
-                  <button class="btn btn-success" data-action="done">
+                  <a href="{% url 'mark_as_done' task.pk %}"><button class="btn btn-success" data-action="done">
                     <span class="icon">&#10003;</span>Mark as done
-                  </button>
-                  <button class="btn btn-danger" data-action="delete">
+                  </button></a>
+                 <a href="{% url 'delete_task' task.pk %}"> <button class="btn btn-danger" data-action="delete">
                     <span class="icon">&times;</span>
-                  </button>
-                  <button class="btn btn-outline" data-action="edit">
+                  </button></a>
+                  <a href="{% url 'edit_task' task.pk %}"><button class="btn btn-outline" data-action="edit">
                     <span class="icon">&#9998;</span>Edit
-                  </button>
+                  </button></a>
                 </div>
               </div>
             {% endfor %}
@@ -102,13 +102,16 @@
 
         <div id="completed-list" class="card-list">
           
-            {% for task in tasks %}
+            {% for task in completed_tasks %}
               <div class="task-card completed" data-id="{{ task.id }}">
-                <div class="task-text">{{ task.task }}</div>
+                <div class="task-text">ID {{ task.pk }} - {{ task.task }}</div>
                 <div class="btn-group">
-                  <button class="btn btn-danger" data-action="delete">
+                  <a href="{% url 'mark_as_undone' task.pk %}"><button class="btn btn-danger" data-action="done">
+                    <span class="icon">&#10003;</span>Mark as Undone
+                  </button></a>
+                  <a href="{% url 'delete_task' task.pk %}"><button class="btn btn-danger" data-action="delete">
                     <span class="icon">&times;</span>
-                  </button>
+                  </button></a>
                 </div>
               </div>
             {% endfor %}
@@ -118,22 +121,25 @@
     </main>
   </div>
 
-  <!-- Edit modal -->
+  <!-- Edit modal 
   <div id="edit-modal" class="modal-backdrop" aria-hidden="true">
     <div class="modal">
-      <div class="modal-header">
-        <h3>Edit task</h3>
-        <button id="edit-close" class="icon-btn" aria-label="Close modal">&times;</button>
-      </div>
-      <label class="modal-label" for="edit-text">Task text</label>
-      <textarea id="edit-text" class="modal-input" rows="3"></textarea>
-      <div class="modal-actions">
-        <button id="edit-cancel" class="btn btn-outline">Cancel</button>
-        <button id="edit-save" class="btn btn-primary">Save</button>
-      </div>
+      <form id="edit-form" method="post" action="#">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h3>Edit task</h3>
+          <button id="edit-close" type="button" class="icon-btn" aria-label="Close modal">&times;</button>
+        </div>
+        <label class="modal-label" for="edit-text">Task text</label>
+        <textarea id="edit-text" name="text" class="modal-input" rows="3" required></textarea>
+        <div class="modal-actions">
+          <button id="edit-cancel" type="button" class="btn btn-outline">Cancel</button>
+          <button id="edit-save" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
     </div>
   </div>
-
- <!-- <script src="{% static 'js/script.js' %}"></script> -->
+-->
+<!-- <script src="{% static 'js/script.js' %}"></script>  -->
 </body>
 </html>
